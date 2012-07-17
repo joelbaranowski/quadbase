@@ -3,10 +3,12 @@
 
 class Matching < ActiveRecord::Base
 
-  
   belongs_to :question
 
-  attr_accessible :content, :credit, :choice_id, :matched_id, :column, :updated_at
+  attr_accessible :content, :choice_id, :matched_id, :column, :updated_at
+  validate :question_not_published
+  validate :question_not_changed, :on => :update
+  validates_presence_of :question
   
   attr_writer :variated_content_html
   
@@ -15,23 +17,29 @@ class Matching < ActiveRecord::Base
   end
 
   def content_copy
-    AnswerChoice.new(:content => content, :credit => credit)
-  end
-  
-  def get_attachable
-    question
+    Matching.new(:content => content, :choice_id => choice_id,
+                 :matched_id => matched_id, :column => column)
   end
   
   def variate!(variator)
     @variated_content_html = variator.fill_in_variables(content_html)
   end
-
+  
+  def get_attachable
+    question
+  end
 
   protected
 
   def question_not_published
-    return if !question.is_published?
-    errors.add(:base, "Cannot modify a question answer after the question is published.")
+    return if !question.try(:is_published?)
+    errors.add(:base, "Cannot modify a published question's matchings.")
     false
-  end                          
+  end
+  
+  def question_not_changed
+    return if !question_id_changed?
+    errors.add(:base, "Cannot move a matching to another question.")
+    false
+  end
 end
