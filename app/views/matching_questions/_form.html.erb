@@ -125,7 +125,7 @@
 <% rightCounter = 0 %>
 <div style='float:right;'>
 <table>
-<tbody>
+<tbody style="position:relative">
 <%= f.fields_for :matchings do |g| %>
    <% actcounter = actcounter + 2 %>    
    <% if g.object.column == "right" %>
@@ -168,7 +168,7 @@
 
 <div style="float:left;">
  <table>
-  <tbody>
+  <tbody style="position:relative">
 
 <% rightCounter = counter %>
 <%= f.fields_for :matchings do |g| %>    

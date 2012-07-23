@@ -189,16 +189,15 @@ function svgDrawLine(eTarget, eSource) {
 
         var $source = eSource;
         var $target = eTarget;
-
+        
         // origin -> ending ... from left to right
         // 10 + 10 (padding left + padding right) + 2 + 2 (border left + border right)
         var originX = 0;
-        var originY = $source.offset().top - 500;
+        var originY = $source.position().top + 50;
 
         
         var endingX = 80;
-        var endingY = $target.offset().top - 500;
-
+        var endingY = $target.position().top + 50;
         var space = 20;
         var color = colours[random(9)];
 
