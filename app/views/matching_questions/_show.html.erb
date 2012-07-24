@@ -12,8 +12,6 @@
  <% content_for :javascript_includes do %>
     <%= javascript_include_tag "matching" %>
   <% end %>
-    <div id="svgbasics">
-    </div>
 
 <p>
 Content & Answers
@@ -24,22 +22,25 @@ Content & Answers
 <div class="quad-question_content">
   <%= question.variated_content_html.html_safe %>
 </div>
+<div id="helpheight" style="height:100%; overflow:hidden">
 <% actcounter = 0 %>
 <% counter = 0 %>
 <% rightCounter = 0 %>
-<table style='position:absolute; margin-left:300px'>
-<tbody>
+<div style='float:right;'>
+<table>
+<tbody  id="rightCol"  style="position:relative">
 <% question.matchings.each do |g| %>
    <% actcounter = actcounter + 2 %>    
    <% if g.column == "right" %>
 	<td style="vertical-align: top;">
-        <div style='border: 2px solid gray; padding: 10px; width: 225px; margin-bottom: 10px; margin-left:25px;' 
-                                 id='<%=g.choice_id%>'> 
-                                <table cellspacing'0' cellpadding='0' style='width: 100%;'> 
+        <div style='border: 2px solid gray; padding: 10px; width: 225px; margin-bottom: 10px;' 
+                                class='ui-corner-all droppable ui-droppable fields' id='<%=g.choice_id%>'> 
+                                <table cellspacing'0' cellpadding='0' style='width: 100%;'>
+				    
                                     <tbody> 
                                         <tr> 
                                             <td style='width: 50px; text-align: center;' rowspan='2'> 
-                                                <img alt='' src='icons/user-48x48.png' /> </td> 
+                                                 </td> 
                                             <td style='text-align: right; vertical-align: top; width: 16px;' rowspan='2'> 
                                                 <span class='ui-icon-arrow-4 ui-icon'></span><span class='ui-icon-shuffle ui-icon'>
                                                 </span>
@@ -61,20 +62,25 @@ Content & Answers
 <% end %>
 </tbody>
 </table>
- <table cellspacing="5" cellpadding="40" style="width: 100%; text-align: center;">
-  <tbody>
+</div>
+
+<div style="float:left;">
+ <table>
+  <tbody id = "leftCol" style="position:relative">
+
 <% rightCounter = counter %>
-<% question.matchings.each do |g| %>    
+<% question.matchings.each do |g| %>  
 	<% if g.column == "left" %>
         <tr>
 	<td>
 	<div style='border: 2px solid gray; padding: 10px; width: 225px; margin-bottom: 10px;'
-                                 id='<%=g.choice_id%>'>
+                                class='ui-corner-all draggable ui-draggable fields' id='<%=g.choice_id%>'>
                                 <table cellspacing'0' cellpadding='0' style='width: 100%;'>
-                                    <tbody> 
+                                  
+                                  <tbody> 
                                         <tr> 
                                             <td style='width: 50px; text-align: center;' rowspan='2'>
-                                                <img alt='' src='icons/user-48x48.png' /> </td>
+                                                 </td>
                                             <td style='text-align: right; vertical-align: top; width: 16px;' rowspan='2'>
                                                 <span class='ui-icon-arrow-4 ui-icon'></span><span class='ui-icon-shuffle ui-icon'>
                                                 </span>
@@ -82,7 +88,7 @@ Content & Answers
                                         </tr>
                                         <tr>
                                             <td style='font-size: 0.9em; text-align: left;'>
-	                 <%= g.content %>
+	<%= g.content %>
                          </td>
                                         </tr> 
                                     </tbody> 
@@ -92,10 +98,7 @@ Content & Answers
         </tr>
         <% if g.choice_id != g.matched_id %>
         <script type="text/javascript">
-        $(document).ready(function(){
         svgDrawLine($("#<%=g.matched_id%>"), $("#<%=g.choice_id%>"));
-        $("#svgbasics").hide();
-        });
         </script>
         <% end %>
         <% counter = counter + 1 %>
@@ -103,16 +106,16 @@ Content & Answers
        
         
 <% end%>
-<% while counter < 2 * (rightCounter - 1)%>
+<% while counter < 2 * (rightCounter)%>
 <tr>
 <td>
-  <div style='border: 2px solid gray; padding: 10px; width: 320px; margin-bottom: 10px; visibility:hidden'
+  <div style='border: 2px solid gray; padding: 10px; width: 100%; margin-bottom: 10px; visibility:hidden'
                                 class='ui-corner-all draggable ui-draggable' id='wrapper2'>
                                 <table cellspacing'0' cellpadding='0' style='width: 100%;'>
                                     <tbody> 
                                         <tr> 
                                             <td style='width: 50px; text-align: center;' rowspan='2'>
-                                                <img alt='' src='icons/user-48x48.png' /> </td>
+                                                 </td>
                                             <td style='text-align: right; vertical-align: top; width: 16px;' rowspan='2'>
                                                 <span class='ui-icon-arrow-4 ui-icon'></span><span class='ui-icon-shuffle ui-icon'>
                                                 </span>
@@ -129,5 +132,10 @@ Content & Answers
 <% counter = counter + 1 %>
       
 <% end %>
+
 </tbody>
  </table>
+</div>
+<div id="svgbasics" style="float:left; width:70px; height:100%; position:relative">  
+</div>
+</div>
