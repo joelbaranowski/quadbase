@@ -36,10 +36,10 @@
 
 <% end %>
    
- <%= f.hidden_field :type, :value => "SimpleQuestion"%>
+ <%= f.hidden_field :type, :value => "MatchingQuestion"%>
 
  <p>You are editing a 
-    <%= link_to_help "simple_questions", "matching question",
+    <%= link_to_help "matching_questions", "matching question",
                      {:height => 400, 
                       :width => 700} %>. 
     Need help <%= link_to_help "formatting", "formatting", 
@@ -119,13 +119,13 @@
     <p>
         Drag and Drop the boxes on the left to their matching component on the right.
     </p>
-<div id="helpheight" style="overflow:hidden">
+<div id="helpheight" style="height:100%; overflow:hidden">
 <% actcounter = 0 %>
 <% counter = 0 %>
 <% rightCounter = 0 %>
 <div style='float:right;'>
 <table>
-<tbody style="position:relative">
+<tbody  id="rightCol"  style="position:relative">
 <%= f.fields_for :matchings do |g| %>
    <% actcounter = actcounter + 2 %>    
    <% if g.object.column == "right" %>
@@ -168,7 +168,7 @@
 
 <div style="float:left;">
  <table>
-  <tbody style="position:relative">
+  <tbody id = "leftCol" style="position:relative">
 
 <% rightCounter = counter %>
 <%= f.fields_for :matchings do |g| %>    
@@ -245,20 +245,7 @@
 </div>
 <div id="svgbasics" style="float:left; width:70px; height:100%; position:relative">  
 </div>
-       <div>
-            <table cellspacing="5" cellpadding="40" style="width: 100%; text-align: center;">
-                <tbody>
-                    <tr>
-                        <td id = "leftCol" style="width: 50%; vertical-align: top;">
- 
-                        </td>
-                        <td id = "rightCol" style="vertical-align: top;">
-                            
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
 </div>
     <div id="dialog" title="Reset persons mapping?" style="z-index: 10;">
         <p>
@@ -273,17 +260,18 @@
             <li>No mapping was done yet</li></ul>
     </div>
 <div>
-    <a id="popButton" href="#" style="z-index: 10;">reset mapping</a> <a id="getMappings"
-        href="#" style="z-index: 10;">show mapping</a><a id="addLeft"
-        href="#" style="z-index: 10;">add left</a><a id="addRight"
-        href="#" style="z-index: 10;">add right</a>
+    <a id="popButton" style="z-index: 10;">reset mapping</a> <a id="getMappings"
+        style="z-index: 10;">show mapping</a><a id="addLeft"
+         style="z-index: 10;">add left</a><a id="addRight"
+        style="z-index: 10;">add right</a>
 </div>
 
 <script type="text/javascript">
   counter = <%= actcounter %>;
   $('#addRight').bind('click', function() {
+    $('#helpheight').height($('#helpheight').height() + 100);
     counter = counter + 1;
-    var s = "<div style='border: 2px solid gray; padding: 10px; width: 225px; margin-bottom: 10px; margin-left:75px;' \
+    var s = "<div style='border: 2px solid gray; padding: 10px; width: 225px; margin-bottom: 10px;' \
                                 class='ui-corner-all droppable ui-droppable fields' id="+counter+"> \
                                 <table cellspacing'0' cellpadding='0' style='width: 100%;'> \
                                 <span style='float:right'> \
@@ -371,6 +359,7 @@
   });
   $('#addLeft').bind('click', function() {
     counter = counter + 1;
+    $('#helpheight').height($('#helpheight').height() + 100);
     var s = "<div style='border: 2px solid gray; padding: 10px; width: 225px; margin-bottom: 10px;' \
                                 class='ui-corner-all draggable ui-draggable fields' id="+counter+"> \
                                 <table cellspacing'0' cellpadding='0' style='width: 100%;'> \
