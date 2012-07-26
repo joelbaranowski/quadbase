@@ -13,19 +13,14 @@
     <%= javascript_include_tag "matching" %>
   <% end %>
 
-<p>
-Content & Answers
-</p>
-<p>
-&nbsp
-</p>
 <div class="quad-question_content">
   <%= question.variated_content_html.html_safe %>
 </div>
-<div id="helpheight" style="height:100%; overflow:hidden">
+<div id="helpheight" style="position:relative; height:0; overflow:hidden">
 <% actcounter = 0 %>
 <% counter = 0 %>
 <% rightCounter = 0 %>
+<% leftCounter = 0 %>
 <div style='float:right;'>
 <table>
 <tbody  id="rightCol"  style="position:relative">
@@ -103,39 +98,21 @@ Content & Answers
         <% end %>
         <% counter = counter + 1 %>
         <% end %>
-       
+<% leftCounter = counter - rightCounter %>       
         
 <% end%>
-<% while counter < 2 * (rightCounter)%>
-<tr>
-<td>
-  <div style='border: 2px solid gray; padding: 10px; width: 100%; margin-bottom: 10px; visibility:hidden'
-                                class='ui-corner-all draggable ui-draggable' id='wrapper2'>
-                                <table cellspacing'0' cellpadding='0' style='width: 100%;'>
-                                    <tbody> 
-                                        <tr> 
-                                            <td style='width: 50px; text-align: center;' rowspan='2'>
-                                                 </td>
-                                            <td style='text-align: right; vertical-align: top; width: 16px;' rowspan='2'>
-                                                <span class='ui-icon-arrow-4 ui-icon'></span><span class='ui-icon-shuffle ui-icon'>
-                                                </span>
-                                            </td> 
-                                        </tr>
-                                        <tr>
-					  <textarea></textarea>
-                                        </tr> 
-                                    </tbody> 
-                                </table> 
-                            </div>
-        </td>
-        </tr>
-<% counter = counter + 1 %>
-      
+<% if rightCounter > leftCounter %>
+<script type="text/javascript">
+$('#helpheight').height($('#helpheight').height() + 114 * <%= rightCounter  %>);
+</script>
+<% else %>
+<script type="text/javascript">
+$('#helpheight').height($('#helpheight').height() + 114 * <%= leftCounter  %>);
+</script>
 <% end %>
-
 </tbody>
  </table>
 </div>
-<div id="svgbasics" style="float:left; width:70px; height:100%; position:relative">  
+<div id="svgbasics" style="display:none; float:left; width:70px; height:100%; position:relative">  
 </div>
 </div>

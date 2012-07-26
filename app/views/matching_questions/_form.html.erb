@@ -119,10 +119,11 @@
     <p>
         Drag and Drop the boxes on the left to their matching component on the right.
     </p>
-<div id="helpheight" style="height:100%; overflow:hidden">
+<div id="helpheight" style="position:relative; height:0; overflow:hidden">
 <% actcounter = 0 %>
 <% counter = 0 %>
 <% rightCounter = 0 %>
+<% leftCounter = 0 %>
 <div style='float:right;'>
 <table>
 <tbody  id="rightCol"  style="position:relative">
@@ -206,38 +207,24 @@
         <% if g.object.choice_id != g.object.matched_id %>
         <script type="text/javascript">
         svgDrawLine($("#<%=g.object.matched_id%>"), $("#<%=g.object.choice_id%>"));
+        $("#<%=g.object.choice_id%>").draggable("option", "disabled", true);
         </script>
         <% end %>
         <% counter = counter + 1 %>
         <% end %>
+<% leftCounter = counter - rightCounter %>
        
         
 <% end%>
-<% while counter < 2 * (rightCounter)%>
-<tr>
-<td>
-  <div style='border: 2px solid gray; padding: 10px; width: 100%; margin-bottom: 10px; visibility:hidden'
-                                class='ui-corner-all draggable ui-draggable' id='wrapper2'>
-                                <table cellspacing'0' cellpadding='0' style='width: 100%;'>
-                                    <tbody> 
-                                        <tr> 
-                                            <td style='width: 50px; text-align: center;' rowspan='2'>
-                                                 </td>
-                                            <td style='text-align: right; vertical-align: top; width: 16px;' rowspan='2'>
-                                                <span class='ui-icon-arrow-4 ui-icon'></span><span class='ui-icon-shuffle ui-icon'>
-                                                </span>
-                                            </td> 
-                                        </tr>
-                                        <tr>
-					  <textarea></textarea>
-                                        </tr> 
-                                    </tbody> 
-                                </table> 
-                            </div>
-        </td>
-        </tr>
-<% counter = counter + 1 %>
-      
+
+<% if rightCounter > leftCounter %>
+<script type="text/javascript">
+$('#helpheight').height($('#helpheight').height() + 114 * <%= rightCounter + 1 %>);
+</script>
+<% else %>
+<script type="text/javascript">
+$('#helpheight').height($('#helpheight').height() + 114 * <%= leftCounter + 1  %>);
+</script>
 <% end %>
 
 </tbody>
@@ -260,9 +247,9 @@
             <li>No mapping was done yet</li></ul>
     </div>
 <div>
-    <a id="popButton" style="z-index: 10;">reset mapping</a> <a id="getMappings"
-        style="z-index: 10;">show mapping</a><a id="addLeft"
-         style="z-index: 10;">add left</a><a id="addRight"
+    <a id="popButton" style="z-index: 10;">reset mapping</a> | <a id="getMappings"
+        style="z-index: 10;">show mapping</a> | <a id="addLeft"
+         style="z-index: 10;">add left</a> | <a id="addRight"
         style="z-index: 10;">add right</a>
 </div>
 
@@ -352,6 +339,7 @@
 
             // disable it so it can"t be used anymore	
             $(ui.draggable).draggable("disable");
+            
 
             svgDrawLine($(this), $(ui.draggable));
         }
@@ -391,6 +379,7 @@
     t.innerHTML = s;
     document.getElementById('leftCol').appendChild(t);
     $("div .draggable").draggable();
+    
         $("div .draggable").draggable({
         revert: true,
         snap: false

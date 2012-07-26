@@ -170,6 +170,7 @@ $(document).ready(function () {
     $("#getMappings").click(function () {
         $("#dialogMappingResult").dialog("open");
     });
+    $(".draggable").draggable({ containment: "#helpheight" });
 
     svg = Raphael("svgbasics", "100%", "100%");
 
